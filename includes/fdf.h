@@ -12,16 +12,16 @@
 
 #ifndef FDF_H
 # define FDF_H
-#include <fcntl.h>
-#include "../libft/includes/get_next_line.h"
-#include "../libft/includes/libft.h" 
-#include "../libft/includes/ft_printf.h" 
+# include "../libft/includes/ft_printf.h"
+# include "../libft/includes/get_next_line.h"
+# include "../libft/includes/libft.h"
+# include <fcntl.h>
 
 typedef struct s_point
 {
-  int z;
-  int x;
-  int y;
-} t_point;
+	int	z;
+	int	x;
+	int	y;
+}		t_point;
 
 #endif
