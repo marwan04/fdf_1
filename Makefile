@@ -11,7 +11,7 @@ LIB = -L./libft -lft -lmlx -lX11  -lXext
 
 RM = rm -rf
 
-SRC_FILES = test.c
+SRC_FILES = draw.c
 
 SRC = $(addprefix $(SRCDIR)/, $(SRC_FILES))
 OBJ = $(addprefix $(OBJDIR)/, $(SRC_FILES:.c=.o))
