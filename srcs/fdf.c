@@ -6,7 +6,7 @@
 /*   By: malrifai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:19:15 by malrifai          #+#    #+#             */
-/*   Updated: 2024/11/22 20:58:52 by malrifai         ###   ########.fr       */
+/*   Updated: 2024/11/23 01:36:19 by malrifai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ t_point	*split_row(char *row, int y, int *argc)
 	points = (t_point *)malloc(*argc * sizeof(t_point));
 	while (x < *argc)
 	{
-    points[x].x = x;
-    points[x].y = y;
+    points[x].x = x * 50;
+    points[x].y = y * 50;
 		points[x].z = ft_atoi(splited_row[x]);
     points[x].color = 0xFFFFFF;
 		free(splited_row[x]);
@@ -104,7 +104,7 @@ t_point **get_map(char *file, int *argc)
     }
     printf("\n");
   }
-	free(array);
+//	free(array);
 }*/
 
 void test_lines(t_mlx *mlx_data, t_point **map, int rows, int cols)
@@ -131,7 +131,7 @@ int	main(int argc, char **argv)
 {
   argc = 0;
   t_point **map = get_map(argv[1], &argc);
-	//print_int_array(map, 11, argc);
+//	print_int_array(map, 11, argc);
 	//void	*mlx_win;
   t_mlx mlx_data;
 
@@ -139,6 +139,6 @@ int	main(int argc, char **argv)
   mlx_data.win_ptr = mlx_new_window(mlx_data.mlx_ptr, 1920, 1080, "Hello world!");
   mlx_data.color = 0xFFFFFF;
   int fd = open(argv[1], O_RDONLY);
-  test_lines(&mlx_data, map, argc, get_row_numbers(fd));
+  test_lines(&mlx_data, map, get_row_numbers(fd), argc);
 	mlx_loop(mlx_data.mlx_ptr);
 }

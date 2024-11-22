@@ -6,7 +6,7 @@
 /*   By: malrifai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 16:09:56 by malrifai          #+#    #+#             */
-/*   Updated: 2024/11/22 20:56:32 by malrifai         ###   ########.fr       */
+/*   Updated: 2024/11/23 00:36:57 by malrifai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "../libft/includes/get_next_line.h"
 # include "../libft/includes/libft.h"
 # include <fcntl.h>
-# include <mlx.h>
+# include "../sources/minilibx/mlx.h"
 
 typedef struct s_point
 {

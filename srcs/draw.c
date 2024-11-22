@@ -6,19 +6,11 @@
 /*   By: malrifai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 20:15:21 by malrifai          #+#    #+#             */
-/*   Updated: 2024/11/22 20:50:29 by malrifai         ###   ########.fr       */
+/*   Updated: 2024/11/23 00:38:44 by malrifai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <mlx.h>
-
-// mlx data struct;
-typedef struct s_mlx
-{
-    void *mlx_ptr;
-    void *win_ptr;
-    int color;
-} t_mlx;
+#include "../includes/fdf.h"
 
 void swap(int *x0, int *y0, int *x1, int *y1)
 {
