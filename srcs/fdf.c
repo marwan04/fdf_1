@@ -6,35 +6,35 @@
 /*   By: malrifai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:19:15 by malrifai          #+#    #+#             */
-/*   Updated: 2024/11/18 00:51:20 by malrifai         ###   ########.fr       */
+/*   Updated: 2024/11/22 20:58:52 by malrifai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 #include <stdio.h>
 
-int	*split_row(char *row, int *argc)
+t_point	*split_row(char *row, int y, int *argc)
 {
 	char	**splited_row;
-	int		*heights;
-	int		i;
-	int		len;
+	t_point *points;
+	int		x;
 
-	len = 0;
-	i = 0;
+	x = 0;
 	splited_row = ft_split(row, ' ');
-	while (splited_row[len])
-		len++;
-	*argc = len;
-	heights = (int *)malloc(len * sizeof(int));
-	while (i < len)
+	while (splited_row[*argc])
+		*argc = *argc + 1;
+	points = (t_point *)malloc(*argc * sizeof(t_point));
+	while (x < *argc)
 	{
-		heights[i] = ft_atoi(splited_row[i]);
-		free(splited_row[i]);
-		i++;
+    points[x].x = x;
+    points[x].y = y;
+		points[x].z = ft_atoi(splited_row[x]);
+    points[x].color = 0xFFFFFF;
+		free(splited_row[x]);
+		x++;
 	}
 	free(splited_row);
-	return (heights);
+	return (points);
 }
 
 int	get_row_numbers(int fd)
@@ -54,7 +54,32 @@ int	get_row_numbers(int fd)
 	return (i);
 }
 
-void	print_int_array(int **array, int rows, int cols)
+t_point **get_map(char *file, int *argc)
+{
+     int   fd;
+     int   count;
+     char  *line;
+     t_point   **map;
+     int   y;
+
+     y = 0;
+     fd = open(file, O_RDONLY);
+     count = get_row_numbers(fd);
+     map = malloc(count * sizeof(t_point *));
+     fd = open(file, O_RDONLY);
+     line = get_next_line(fd);
+     while (line != NULL)
+     {
+       map[y] = split_row(line, y, argc);
+       y++;
+       free(line);
+       line = get_next_line(fd);
+     }
+     close(fd);
+     return (map);
+}
+
+/*void	print_int_array(t_point **array, int rows, int cols)
 {
 	if (!array)
 	{
@@ -65,34 +90,55 @@ void	print_int_array(int **array, int rows, int cols)
 	{
 		for (int j = 0; j < cols; j++)
 		{
-			printf("%d\t", array[i][j]);
+			printf("%d\t", array[i][j].z);
 		}
-		free(array[i]);
+		//free(array[i]);
 		printf("\n");
 	}
+
+  for (int i = 0; i < rows; i++)
+  {
+    for(int j = 0; j < cols; j++)
+    {
+      printf("x:%d  y:%d\t",array[i][j].x, array[i][j].y);
+    }
+    printf("\n");
+  }
 	free(array);
+}*/
+
+void test_lines(t_mlx *mlx_data, t_point **map, int rows, int cols)
+{
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
+            // Draw horizontal line to the next point in the row
+            if (j + 1 < cols)
+                drawLineH(map[i][j].x, map[i][j].y,
+                          map[i][j + 1].x, map[i][j + 1].y, mlx_data);
+
+            // Draw vertical line to the next point in the column
+            if (i + 1 < rows)
+                drawLineV(map[i][j].x, map[i][j].y,
+                          map[i + 1][j].x, map[i + 1][j].y, mlx_data);
+        }
+    }
 }
+
 
 int	main(int argc, char **argv)
 {
-	int		fd;
-	int		count;
-	char	*line;
-	int		**map;
-	int		i;
+  argc = 0;
+  t_point **map = get_map(argv[1], &argc);
+	//print_int_array(map, 11, argc);
+	//void	*mlx_win;
+  t_mlx mlx_data;
 
-	i = 0;
-	fd = open(argv[1], O_RDONLY);
-	count = get_row_numbers(fd);
-	map = malloc(count * sizeof(int *));
-	fd = open(argv[1], O_RDONLY);
-	line = get_next_line(fd);
-	while (line != NULL)
-	{
-		map[i++] = split_row(line, &argc);
-		free(line);
-		line = get_next_line(fd);
-	}
-	close(fd);
-	print_int_array(map, count, argc);
+  mlx_data.mlx_ptr = mlx_init();
+  mlx_data.win_ptr = mlx_new_window(mlx_data.mlx_ptr, 1920, 1080, "Hello world!");
+  mlx_data.color = 0xFFFFFF;
+  int fd = open(argv[1], O_RDONLY);
+  test_lines(&mlx_data, map, argc, get_row_numbers(fd));
+	mlx_loop(mlx_data.mlx_ptr);
 }
