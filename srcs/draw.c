@@ -6,11 +6,19 @@
 /*   By: malrifai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 20:15:21 by malrifai          #+#    #+#             */
-/*   Updated: 2024/11/21 21:30:21 by malrifai         ###   ########.fr       */
+/*   Updated: 2024/11/22 20:50:29 by malrifai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <mlx.h>
+
+// mlx data struct;
+typedef struct s_mlx
+{
+    void *mlx_ptr;
+    void *win_ptr;
+    int color;
+} t_mlx;
 
 void swap(int *x0, int *y0, int *x1, int *y1)
 {
@@ -20,11 +28,11 @@ void swap(int *x0, int *y0, int *x1, int *y1)
   *x0 = *x1;
   *x1 = temp;
   temp = *y0;
-  *y0 = y1;
+  *y0 = *y1;
   *y1 = temp;
 }
 
-void drawLineH(int x0, int y0, int x1, int y1) 
+void drawLineH(int x0, int y0, int x1, int y1, t_mlx *mlx) 
 {
     if (x0 > x1)
       swap(&x0, &y0, &x1, &y1);
@@ -42,12 +50,13 @@ void drawLineH(int x0, int y0, int x1, int y1)
     if (dx != 0)
     {
         int y = y0;
-        int p = 2 * dy - dx;
+        int p = 2 * dy - dx;/* condition */
 
         int i = 0;
         while (i <= dx)
         {
-            putPixel(x0 + i, y);
+            //putPixel(x0 + i, y);
+            mlx_pixel_put(mlx->mlx_ptr, mlx->win_ptr, x0 + i, y, mlx->color);
             if (p >= 0)
             {
                 y += dir;
@@ -59,7 +68,7 @@ void drawLineH(int x0, int y0, int x1, int y1)
     }
 }
 
-void drawLineV(int x0, int y0, int x1, int y1) {
+void drawLineV(int x0, int y0, int x1, int y1, t_mlx *mlx) {
     if (y0 > y1)
       swap(&x0, &x1, &y0, &y1);
 
@@ -80,7 +89,8 @@ void drawLineV(int x0, int y0, int x1, int y1) {
         int i = 0;
         while (i <= dy)
         {
-            putPixel(x, y0 + i);
+            //putPixel(x, y0 + i);
+            mlx_pixel_put(mlx->mlx_ptr, mlx->win_ptr, x, y0 + i,  mlx->color);
             if (p >= 0)
             {
                 x += dir;
@@ -92,13 +102,31 @@ void drawLineV(int x0, int y0, int x1, int y1) {
     }
 }
 
+/*void test_lines(t_mlx *mlx)
+{
+    int test_map[][4] = {
+        {100, 100, 200, 100}, // Horizontal line
+        {100, 100, 100, 200}, // Vertical line
+        {100, 100, 200, 200}, // Diagonal line
+        {200, 100, 100, 200}  // Reverse diagonal
+    };
+    int num_lines = 4;
+
+    for (int i = 0; i < num_lines; i++)
+    {
+        drawLineH(test_map[i][0], test_map[i][1], test_map[i][2], test_map[i][3], mlx);
+    }
+}
+
 int	main(void)
 {
-	void	*mlx;
 	//void	*mlx_win;
-
-	mlx = mlx_init();
-	mlx_new_window(mlx, 1920, 1080, "Hello world!");
-	mlx_loop(mlx);
-}
+  t_mlx mlx_data;
+  
+  mlx_data.mlx_ptr = mlx_init();
+  mlx_data.win_ptr = mlx_new_window(mlx_data.mlx_ptr, 1920, 1080, "Hello world!");
+  mlx_data.color = 0xFFFFFF;
+  test_lines(&mlx_data);
+	mlx_loop(mlx_data.mlx_ptr);
+}*/
 
