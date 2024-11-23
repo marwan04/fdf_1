@@ -61,6 +61,7 @@ int			ft_isdigit(int i);
 int			ft_isascii(int i);
 int			ft_isprint(int i);
 int			ft_atoi(const char *str);
+int			ft_atoi_base(char *str, char *base);
 int			ft_toupper(int i);
 int			ft_tolower(int i);
 int			ft_isalnum(int i);
