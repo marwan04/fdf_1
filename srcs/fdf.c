@@ -6,12 +6,30 @@
 /*   By: malrifai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:19:15 by malrifai          #+#    #+#             */
-/*   Updated: 2024/11/23 01:36:19 by malrifai         ###   ########.fr       */
+/*   Updated: 2024/11/23 20:11:27 by malrifai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 #include <stdio.h>
+
+int get_color(char *cell)
+{
+  int color;
+  char **splited_cell;
+
+  color = 0xFFFFFF;
+  if(ft_strchr(cell, ','))
+  {
+    splited_cell = ft_split(cell, ',');
+    //printf("%s\n",splited_cell[1]);
+    color = ft_atoi_base(splited_cell[1], "0123456789ABCDEF");
+    if (color == 0)
+      color = 0xFFFFFF;
+  }
+  printf("%d/n", color);
+  return (color);
+}
 
 t_point	*split_row(char *row, int y, int *argc)
 {
@@ -26,10 +44,10 @@ t_point	*split_row(char *row, int y, int *argc)
 	points = (t_point *)malloc(*argc * sizeof(t_point));
 	while (x < *argc)
 	{
-    points[x].x = x * 50;
-    points[x].y = y * 50;
+    points[x].x = x;
+    points[x].y = y;
 		points[x].z = ft_atoi(splited_row[x]);
-    points[x].color = 0xFFFFFF;
+    points[x].color = get_color(splited_row[x]);
 		free(splited_row[x]);
 		x++;
 	}
@@ -92,7 +110,7 @@ t_point **get_map(char *file, int *argc)
 		{
 			printf("%d\t", array[i][j].z);
 		}
-		//free(array[i]);
+		free(array[i]);
 		printf("\n");
 	}
 
@@ -104,24 +122,28 @@ t_point **get_map(char *file, int *argc)
     }
     printf("\n");
   }
-//	free(array);
+	free(array);
 }*/
 
 void test_lines(t_mlx *mlx_data, t_point **map, int rows, int cols)
 {
+  int width = 1920 / cols;
+  int len = 1080 / rows;
     for (int i = 0; i < rows; i++)
     {
         for (int j = 0; j < cols; j++)
         {
+            mlx_data->color = map[i][j].color;
+            //printf("%d", mlx_data->color);
             // Draw horizontal line to the next point in the row
             if (j + 1 < cols)
-                drawLineH(map[i][j].x, map[i][j].y,
-                          map[i][j + 1].x, map[i][j + 1].y, mlx_data);
+                drawLineH(map[i][j].x * width, map[i][j].y * len,
+                          map[i][j + 1].x * width, map[i][j + 1].y * len, mlx_data);
 
             // Draw vertical line to the next point in the column
             if (i + 1 < rows)
-                drawLineV(map[i][j].x, map[i][j].y,
-                          map[i + 1][j].x, map[i + 1][j].y, mlx_data);
+                drawLineV(map[i][j].x * width, map[i][j].y * len,
+                          map[i + 1][j].x * width, map[i + 1][j].y * len, mlx_data);
         }
     }
 }
@@ -131,6 +153,7 @@ int	main(int argc, char **argv)
 {
   argc = 0;
   t_point **map = get_map(argv[1], &argc);
+  //print_int_array(map, 11, argc);
 //	print_int_array(map, 11, argc);
 	//void	*mlx_win;
   t_mlx mlx_data;
