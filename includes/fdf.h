@@ -6,7 +6,7 @@
 /*   By: malrifai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 16:09:56 by malrifai          #+#    #+#             */
-/*   Updated: 2024/11/23 12:10:43 by malrifai         ###   ########.fr       */
+/*   Updated: 2024/11/24 18:34:15 by malrifai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,16 @@ typedef struct s_point
 
 typedef struct s_mlx
 {
-      void *mlx_ptr;
-      void *win_ptr;
-      int color;
+    void    *mlx_ptr;
+    void    *win_ptr;
+    void    *img_ptr;     
+    char    *img_data;    
+    int     bpp;          
+    int     line_length;  
+    int     endian;       
+    int     color;        
 } t_mlx;
+
 
 void drawLineH(int x0, int y0, int x1, int y1, t_mlx *mlx);
 void drawLineV(int x0, int y0, int x1, int y1, t_mlx *mlx);

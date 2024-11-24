@@ -6,11 +6,20 @@
 /*   By: malrifai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 20:15:21 by malrifai          #+#    #+#             */
-/*   Updated: 2024/11/23 12:51:27 by malrifai         ###   ########.fr       */
+/*   Updated: 2024/11/24 18:51:49 by malrifai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
+
+void set_pixel(t_mlx *mlx, int x, int y, int color)
+{
+    if (x < 0 || y < 0 || x >= 1920 || y >= 1080)
+        return;
+    char *pixel = mlx->img_data + (y * mlx->line_length + x * (mlx->bpp / 8));
+    *(unsigned int *)pixel = color;
+}
+
 
 void swap(int *x0, int *y0, int *x1, int *y1)
 {
@@ -47,8 +56,7 @@ void drawLineH(int x0, int y0, int x1, int y1, t_mlx *mlx)
         int i = 0;
         while (i <= dx)
         {
-            //putPixel(x0 + i, y);
-            mlx_pixel_put(mlx->mlx_ptr, mlx->win_ptr, x0 + i, y, mlx->color);
+            set_pixel(mlx, x0 + i, y, mlx->color);
             if (p >= 0)
             {
                 y += dir;
@@ -82,7 +90,7 @@ void drawLineV(int x0, int y0, int x1, int y1, t_mlx *mlx) {
         while (i <= dy)
         {
             //putPixel(x, y0 + i);
-            mlx_pixel_put(mlx->mlx_ptr, mlx->win_ptr, x, y0 + i,  mlx->color);
+            set_pixel(mlx, x, y0 + i, mlx->color);
             if (p >= 0)
             {
                 x += dir;

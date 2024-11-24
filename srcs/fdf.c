@@ -6,7 +6,7 @@
 /*   By: malrifai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:19:15 by malrifai          #+#    #+#             */
-/*   Updated: 2024/11/23 20:11:27 by malrifai         ###   ########.fr       */
+/*   Updated: 2024/11/24 18:55:24 by malrifai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,9 +159,13 @@ int	main(int argc, char **argv)
   t_mlx mlx_data;
 
   mlx_data.mlx_ptr = mlx_init();
-  mlx_data.win_ptr = mlx_new_window(mlx_data.mlx_ptr, 1920, 1080, "Hello world!");
+  mlx_data.win_ptr = mlx_new_window(mlx_data.mlx_ptr, 1920, 1080, "FDF");
+  mlx_data.img_ptr = mlx_new_image(mlx_data.mlx_ptr, 1920, 1080);
+mlx_data.img_data = mlx_get_data_addr(mlx_data.img_ptr, &mlx_data.bpp,
+                                      &mlx_data.line_length, &mlx_data.endian);
   mlx_data.color = 0xFFFFFF;
   int fd = open(argv[1], O_RDONLY);
   test_lines(&mlx_data, map, get_row_numbers(fd), argc);
+  mlx_put_image_to_window(mlx_data.mlx_ptr, mlx_data.win_ptr, mlx_data.img_ptr, 0, 0);
 	mlx_loop(mlx_data.mlx_ptr);
 }
