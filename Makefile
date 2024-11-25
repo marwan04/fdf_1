@@ -7,7 +7,7 @@ SRCDIR = srcs
 OBJDIR = obj
 LIBPATH	= libft/
 
-LIB = -L./libft -L./sources/minilibx -lft -lmlx -lX11  -lXext
+LIB = -L./libft -L./sources/minilibx -lft -lmlx -lX11 -lm -lXext
 
 RM = rm -rf
 

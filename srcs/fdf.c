@@ -6,12 +6,13 @@
 /*   By: malrifai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:19:15 by malrifai          #+#    #+#             */
-/*   Updated: 2024/11/24 18:55:24 by malrifai         ###   ########.fr       */
+/*   Updated: 2024/11/26 01:15:04 by malrifai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 #include <stdio.h>
+#include <math.h>
 
 int get_color(char *cell)
 {
@@ -27,7 +28,7 @@ int get_color(char *cell)
     if (color == 0)
       color = 0xFFFFFF;
   }
-  printf("%d/n", color);
+  //printf("%d/n", color);
   return (color);
 }
 
@@ -127,8 +128,8 @@ t_point **get_map(char *file, int *argc)
 
 void test_lines(t_mlx *mlx_data, t_point **map, int rows, int cols)
 {
-  int width = 1920 / cols;
-  int len = 1080 / rows;
+//  int width = 1920 / cols;
+//  int len = 1080 / rows;
     for (int i = 0; i < rows; i++)
     {
         for (int j = 0; j < cols; j++)
@@ -137,17 +138,29 @@ void test_lines(t_mlx *mlx_data, t_point **map, int rows, int cols)
             //printf("%d", mlx_data->color);
             // Draw horizontal line to the next point in the row
             if (j + 1 < cols)
-                drawLineH(map[i][j].x * width, map[i][j].y * len,
-                          map[i][j + 1].x * width, map[i][j + 1].y * len, mlx_data);
+                drawLineH(map[i][j].x, map[i][j].y,
+                          map[i][j + 1].x, map[i][j + 1].y, mlx_data);
 
             // Draw vertical line to the next point in the column
             if (i + 1 < rows)
-                drawLineV(map[i][j].x * width, map[i][j].y * len,
-                          map[i + 1][j].x * width, map[i + 1][j].y * len, mlx_data);
+                drawLineV(map[i][j].x , map[i][j].y,
+                          map[i + 1][j].x, map[i + 1][j].y, mlx_data);
         }
     }
 }
 
+void apply_isometric(t_point *point, double cos_angle, double sin_angle) {
+    int previous_x = point->x;
+    int previous_y = point->y;
+
+    point->x = (previous_x - previous_y) * cos_angle;
+    point->y = (previous_x + previous_y) * sin_angle - point->z;
+
+   point->x += 960; // Adjusted center
+point->y += 540; // Adjusted center
+
+printf("Transformed Point: x=%d, y=%d\n", point->x, point->y);
+}
 
 int	main(int argc, char **argv)
 {
@@ -163,9 +176,22 @@ int	main(int argc, char **argv)
   mlx_data.img_ptr = mlx_new_image(mlx_data.mlx_ptr, 1920, 1080);
 mlx_data.img_data = mlx_get_data_addr(mlx_data.img_ptr, &mlx_data.bpp,
                                       &mlx_data.line_length, &mlx_data.endian);
+
   mlx_data.color = 0xFFFFFF;
   int fd = open(argv[1], O_RDONLY);
-  test_lines(&mlx_data, map, get_row_numbers(fd), argc);
+  int cols = get_row_numbers(fd);
+  close(fd);
+double angle = 30.0;  
+    double cos_angle = cos(angle * M_PI / 180.0);
+    double sin_angle = sin(angle * M_PI / 180.0);
+
+    for (int i = 0; i < cols; i++) {
+        for (int j = 0; j < argc; j++) {
+            apply_isometric(&map[i][j], cos_angle, sin_angle);
+        }
+    }
+test_lines(&mlx_data, map, cols, argc);
+
   mlx_put_image_to_window(mlx_data.mlx_ptr, mlx_data.win_ptr, mlx_data.img_ptr, 0, 0);
 	mlx_loop(mlx_data.mlx_ptr);
 }
