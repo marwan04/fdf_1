@@ -6,7 +6,7 @@
 /*   By: malrifai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:19:15 by malrifai          #+#    #+#             */
-/*   Updated: 2024/11/26 01:15:04 by malrifai         ###   ########.fr       */
+/*   Updated: 2024/11/28 19:08:02 by malrifai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,27 @@ int get_color(char *cell)
   return (color);
 }
 
-t_point	*split_row(char *row, int y, int *argc)
+t_point	*split_row(char *row, int y, int *argc, int cols)
 {
 	char	**splited_row;
 	t_point *points;
 	int		x;
+int horizontal_offset;
+int vertical_offset;
 
 	x = 0;
 	splited_row = ft_split(row, ' ');
 	while (splited_row[*argc])
 		*argc = *argc + 1;
+  double scale_factor = fmin(1920 / (*argc), 1080 / cols);
+  horizontal_offset = (1920 - (*argc - 1) * scale_factor) / 2;
+  vertical_offset = (1080 - (cols - 1) * scale_factor) / 2;
+
 	points = (t_point *)malloc(*argc * sizeof(t_point));
 	while (x < *argc)
 	{
-    points[x].x = x;
-    points[x].y = y;
+    points[x].x = x * scale_factor + horizontal_offset;
+    points[x].y = y * scale_factor + vertical_offset;
 		points[x].z = ft_atoi(splited_row[x]);
     points[x].color = get_color(splited_row[x]);
 		free(splited_row[x]);
@@ -89,7 +95,7 @@ t_point **get_map(char *file, int *argc)
      line = get_next_line(fd);
      while (line != NULL)
      {
-       map[y] = split_row(line, y, argc);
+       map[y] = split_row(line, y, argc, count);
        y++;
        free(line);
        line = get_next_line(fd);
@@ -136,6 +142,9 @@ void test_lines(t_mlx *mlx_data, t_point **map, int rows, int cols)
         {
             mlx_data->color = map[i][j].color;
             //printf("%d", mlx_data->color);
+            printf("Drawing Line: Start(%d, %d) -> End(%d, %d)\n",
+       map[i][j].x, map[i][j].y, map[i][j + 1].x, map[i][j + 1].y);
+
             // Draw horizontal line to the next point in the row
             if (j + 1 < cols)
                 drawLineH(map[i][j].x, map[i][j].y,
@@ -156,8 +165,8 @@ void apply_isometric(t_point *point, double cos_angle, double sin_angle) {
     point->x = (previous_x - previous_y) * cos_angle;
     point->y = (previous_x + previous_y) * sin_angle - point->z;
 
-   point->x += 960; // Adjusted center
-point->y += 540; // Adjusted center
+point->x += 600; // Adjusted center
+point->y -= 240; // Adjusted center
 
 printf("Transformed Point: x=%d, y=%d\n", point->x, point->y);
 }
@@ -185,8 +194,9 @@ double angle = 30.0;
     double cos_angle = cos(angle * M_PI / 180.0);
     double sin_angle = sin(angle * M_PI / 180.0);
 
-    for (int i = 0; i < cols; i++) {
+   for (int i = 0; i < cols; i++) {
         for (int j = 0; j < argc; j++) {
+          printf("Original Point: x=%d, y=%d, z=%d\n", map[i][j].x, map[i][j].y, map[i][j].z);
             apply_isometric(&map[i][j], cos_angle, sin_angle);
         }
     }
