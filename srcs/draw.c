@@ -6,7 +6,7 @@
 /*   By: malrifai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 20:15:21 by malrifai          #+#    #+#             */
-/*   Updated: 2024/11/24 18:51:49 by malrifai         ###   ########.fr       */
+/*   Updated: 2024/11/29 21:00:11 by malrifai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void drawLineH(int x0, int y0, int x1, int y1, t_mlx *mlx)
     if (dx != 0)
     {
         int y = y0;
-        int p = 2 * dy - dx;/* condition */
+        int p = 2 * dy - dx;
 
         int i = 0;
         while (i <= dx)
@@ -101,7 +101,6 @@ void drawLineV(int x0, int y0, int x1, int y1, t_mlx *mlx) {
         }
     }
 }
-
 /*void test_lines(t_mlx *mlx)
 {
     int test_map[][4] = {

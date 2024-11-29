@@ -6,7 +6,7 @@
 /*   By: malrifai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 16:09:56 by malrifai          #+#    #+#             */
-/*   Updated: 2024/11/26 00:18:41 by malrifai         ###   ########.fr       */
+/*   Updated: 2024/11/29 19:12:35 by malrifai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_mlx
 
 void drawLineH(int x0, int y0, int x1, int y1, t_mlx *mlx);
 void drawLineV(int x0, int y0, int x1, int y1, t_mlx *mlx);
-
+void apply_isometric(t_point *point);
+t_point **get_map(char *file, int *argc, int *rows);
 
 #endif

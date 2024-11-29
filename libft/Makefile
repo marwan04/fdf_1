@@ -14,7 +14,7 @@ ft_strdup.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c ft_strmap
 ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_striteri.c \
 ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c \
 get_next_line.c \
-print_char.c print_hex.c print_int.c print_pointer.c print_string.c print_unsigned.c
+print_char.c print_hex.c print_int.c print_pointer.c print_string.c print_unsigned.c ft_printf.c
 
 SRC = $(addprefix $(SRCDIR)/, $(SRC_FILES))
 OBJ = $(addprefix $(OBJDIR)/, $(SRC_FILES:.c=.o))
