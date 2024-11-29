@@ -6,7 +6,7 @@
 /*   By: malrifai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 19:07:47 by malrifai          #+#    #+#             */
-/*   Updated: 2024/11/29 19:18:15 by malrifai         ###   ########.fr       */
+/*   Updated: 2024/11/30 00:17:30 by malrifai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,9 @@ int	get_color(char *cell)
 	char	**splited_cell;
 
 	color = 0xFFFFFF;
-	if (ft_strchr(cell, ','))
-	{
-		splited_cell = ft_split(cell, ',');
-		color = ft_atoi_base(splited_cell[1], "0123456789ABCDEF");
-		if (color == 0)
-			color = 0xFFFFFF;
-	}
+	splited_cell = ft_split(cell, ',');
+	if (splited_cell[1] != NULL)
+		color = ft_atoi_base(splited_cell[1], 16);
 	return (color);
 }
 

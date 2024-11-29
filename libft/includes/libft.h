@@ -6,7 +6,7 @@
 /*   By: malrifai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 15:07:36 by malrifai          #+#    #+#             */
-/*   Updated: 2024/08/31 20:47:30 by malrifai         ###   ########.fr       */
+/*   Updated: 2024/11/30 00:13:06 by malrifai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int			ft_isdigit(int i);
 int			ft_isascii(int i);
 int			ft_isprint(int i);
 int			ft_atoi(const char *str);
-int			ft_atoi_base(char *str, char *base);
+int			ft_atoi_base(char *str, int base);
 int			ft_toupper(int i);
 int			ft_tolower(int i);
 int			ft_isalnum(int i);
