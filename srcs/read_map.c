@@ -6,7 +6,7 @@
 /*   By: malrifai <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 19:07:47 by malrifai          #+#    #+#             */
-/*   Updated: 2024/11/30 00:17:30 by malrifai         ###   ########.fr       */
+/*   Updated: 2024/11/30 17:36:55 by malrifai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,20 @@ t_point	*split_row(char *row, int y, int *argc, int cols)
 	char	**splited_row;
 	t_point	*points;
 	int		x;
-	int		horizontal_offset;
-	int		vertical_offset;
-	double	scale_factor;
+	t_var	var;
 
 	x = 0;
 	splited_row = ft_split(row, ' ');
 	while (splited_row[*argc])
 		*argc = *argc + 1;
-	scale_factor = fmin(1920 / (*argc), 1080 / cols);
-	horizontal_offset = (1920 - (*argc - 1) * scale_factor) / 2;
-	vertical_offset = (1080 - (cols - 1) * scale_factor) / 2;
+	var.scale_factor = fmin(1920 / (*argc), 1080 / cols);
+	var.horizontal_offset = (1920 - (*argc - 1) * var.scale_factor) / 2;
+	var.vertical_offset = (1080 - (cols - 1) * var.scale_factor) / 2;
 	points = (t_point *)malloc(*argc * sizeof(t_point));
 	while (x < *argc)
 	{
-		points[x].x = x * scale_factor + horizontal_offset;
-		points[x].y = y * scale_factor + vertical_offset;
+		points[x].x = x * var.scale_factor + var.horizontal_offset;
+		points[x].y = y * var.scale_factor + var.vertical_offset;
 		points[x].z = ft_atoi(splited_row[x]);
 		points[x].color = get_color(splited_row[x]);
 		free(splited_row[x]);
@@ -111,5 +109,5 @@ void	apply_isometric(t_point *point)
 	point->y = (previous_x + previous_y) * sin_angle - point->z;
 	point->x += 600;
 	point->y -= 240;
-	// ft_printf("Transformed Point: x=%d, y=%d\n", point->x, point->y);
 }
+// ft_printf("Transformed Point: x=%d, y=%d\n", point->x, point->y);

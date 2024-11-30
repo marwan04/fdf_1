@@ -9,7 +9,7 @@
 /*   Updated: 2024/11/18 20:50:54 by malrifai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+/*
 #include <mlx.h>
 #include <stdio.h>
 #include <X11/X.h>
@@ -163,4 +163,4 @@ int main(void)
     mlx_loop_hook(p.mlx, draw_line, &p);
     mlx_loop(p.mlx);
     return (0);
-}
+}*/
