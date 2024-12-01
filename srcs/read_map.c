@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malrifai <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: malrifai <malrifai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 19:07:47 by malrifai          #+#    #+#             */
-/*   Updated: 2024/11/30 17:36:55 by malrifai         ###   ########.fr       */
+/*   Updated: 2024/12/01 21:16:55 by malrifai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,12 @@ int	get_color(char *cell)
 	color = 0xFFFFFF;
 	splited_cell = ft_split(cell, ',');
 	if (splited_cell[1] != NULL)
+	{
 		color = ft_atoi_base(splited_cell[1], 16);
-	return (color);
+		free(splited_cell[1]);
+	}
+	free(splited_cell[0]);
+	return (free(splited_cell), color);
 }
 
 t_point	*split_row(char *row, int y, int *argc, int cols)
@@ -35,7 +39,7 @@ t_point	*split_row(char *row, int y, int *argc, int cols)
 	splited_row = ft_split(row, ' ');
 	while (splited_row[*argc])
 		*argc = *argc + 1;
-	var.scale_factor = fmin(1920 / (*argc), 1080 / cols);
+	var.scale_factor = fmin(1920 / (*argc), 1080 / cols) * 0.7;
 	var.horizontal_offset = (1920 - (*argc - 1) * var.scale_factor) / 2;
 	var.vertical_offset = (1080 - (cols - 1) * var.scale_factor) / 2;
 	points = (t_point *)malloc(*argc * sizeof(t_point));

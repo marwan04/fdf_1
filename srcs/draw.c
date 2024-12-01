@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malrifai <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: malrifai <malrifai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 20:15:21 by malrifai          #+#    #+#             */
-/*   Updated: 2024/11/30 17:45:09 by malrifai         ###   ########.fr       */
+/*   Updated: 2024/12/01 21:46:41 by malrifai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	set_pixel(t_mlx *mlx, int x, int y, int color)
 void	draw_line_loop(int *start, int *end, t_mlx *mlx, t_draw draw_data)
 {
 	int	e2;
-	
+
 	while (1)
 	{
 		set_pixel(mlx, start[0], start[1], mlx->color);

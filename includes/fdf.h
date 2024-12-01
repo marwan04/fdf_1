@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malrifai <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: malrifai <malrifai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 16:09:56 by malrifai          #+#    #+#             */
-/*   Updated: 2024/11/30 17:32:44 by malrifai         ###   ########.fr       */
+/*   Updated: 2024/12/01 21:35:45 by malrifai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <fcntl.h>
 # include <math.h>
 # include <stdlib.h>
+# include <stdio.h>
 #define ESC_KEY 65307
 
 typedef struct s_point
@@ -41,6 +42,8 @@ typedef struct s_mlx
 	int		line_length;
 	int		endian;
 	int		color;
+	t_point	**map;
+	int rows;
 }			t_mlx;
 
 typedef struct s_draw
