@@ -6,7 +6,7 @@
 /*   By: malrifai <malrifai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 19:07:47 by malrifai          #+#    #+#             */
-/*   Updated: 2024/12/01 21:16:55 by malrifai         ###   ########.fr       */
+/*   Updated: 2024/12/02 21:31:15 by malrifai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,4 +114,3 @@ void	apply_isometric(t_point *point)
 	point->x += 600;
 	point->y -= 240;
 }
-// ft_printf("Transformed Point: x=%d, y=%d\n", point->x, point->y);

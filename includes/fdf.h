@@ -6,7 +6,7 @@
 /*   By: malrifai <malrifai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 16:09:56 by malrifai          #+#    #+#             */
-/*   Updated: 2024/12/01 21:35:45 by malrifai         ###   ########.fr       */
+/*   Updated: 2024/12/02 21:32:35 by malrifai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,13 @@
 # include "../libft/includes/ft_printf.h"
 # include "../libft/includes/get_next_line.h"
 # include "../libft/includes/libft.h"
-//# include "../sources/minilibx/mlx.h"
-# include <mlx.h>
 # include <X11/X.h>
 # include <fcntl.h>
 # include <math.h>
-# include <stdlib.h>
+# include <mlx.h>
 # include <stdio.h>
-#define ESC_KEY 65307
+# include <stdlib.h>
+# define ESC_KEY 65307
 
 typedef struct s_point
 {
@@ -43,7 +42,7 @@ typedef struct s_mlx
 	int		endian;
 	int		color;
 	t_point	**map;
-	int rows;
+	int		rows;
 }			t_mlx;
 
 typedef struct s_draw
@@ -63,10 +62,7 @@ typedef struct s_var
 	double	scale_factor;
 }			t_var;
 
-// void		drawLineH(int x0, int y0, int x1, int y1, t_mlx *mlx);
-// void		drawLineV(int x0, int y0, int x1, int y1, t_mlx *mlx);
-void		draw_line(int *x, int *y, t_mlx *mlx);
-// void		draw_line(int x0, int y0, int x1, int y1, t_mlx *mlx);
+void		test_lines(t_mlx *mlx_data, t_point **map, int rows, int cols);
 void		apply_isometric(t_point *point);
 t_point		**get_map(char *file, int *argc, int *rows);
 
