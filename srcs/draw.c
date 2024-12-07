@@ -6,7 +6,7 @@
 /*   By: malrifai <malrifai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 20:15:21 by malrifai          #+#    #+#             */
-/*   Updated: 2024/12/02 21:43:00 by malrifai         ###   ########.fr       */
+/*   Updated: 2024/12/05 22:02:16 by malrifai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	test_lines(t_mlx *mlx_data, t_point **map, int rows, int cols)
 	while (i < rows)
 	{
 		j = 0;
-		while (j < cols)
+		while (j < cols )
 		{
 			mlx_data->color = map[i][j].color;
 			if (j + 1 < cols)

@@ -6,7 +6,7 @@
 /*   By: malrifai <malrifai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 19:07:47 by malrifai          #+#    #+#             */
-/*   Updated: 2024/12/02 21:31:15 by malrifai         ###   ########.fr       */
+/*   Updated: 2024/12/07 21:12:21 by malrifai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_point	*split_row(char *row, int y, int *argc, int cols)
 	splited_row = ft_split(row, ' ');
 	while (splited_row[*argc])
 		*argc = *argc + 1;
-	var.scale_factor = fmin(1920 / (*argc), 1080 / cols) * 0.7;
+	var.scale_factor = fmin(1920 / (*argc), 1080 / cols) * 0.53;
 	var.horizontal_offset = (1920 - (*argc - 1) * var.scale_factor) / 2;
 	var.vertical_offset = (1080 - (cols - 1) * var.scale_factor) / 2;
 	points = (t_point *)malloc(*argc * sizeof(t_point));
@@ -47,7 +47,7 @@ t_point	*split_row(char *row, int y, int *argc, int cols)
 	{
 		points[x].x = x * var.scale_factor + var.horizontal_offset;
 		points[x].y = y * var.scale_factor + var.vertical_offset;
-		points[x].z = ft_atoi(splited_row[x]);
+		points[x].z = ft_atoi(splited_row[x]) * var.scale_factor;
 		points[x].color = get_color(splited_row[x]);
 		free(splited_row[x]);
 		x++;
@@ -87,6 +87,7 @@ t_point	**get_map(char *file, int *argc, int *rows)
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
+		line = ft_strtrim(line, " ");
 		map[y] = split_row(line, y, argc, *rows);
 		y++;
 		free(line);
