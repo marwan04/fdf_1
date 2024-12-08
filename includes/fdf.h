@@ -6,7 +6,7 @@
 /*   By: malrifai <malrifai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 16:09:56 by malrifai          #+#    #+#             */
-/*   Updated: 2024/12/02 21:32:35 by malrifai         ###   ########.fr       */
+/*   Updated: 2024/12/08 20:37:05 by malrifai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,18 @@
 # include <stdio.h>
 # include <stdlib.h>
 # define ESC_KEY 65307
+#define KEY_ISOMETRIC 50
+#define KEY_CARTESIAN 51
+#define CLEAR 53
 
 typedef struct s_point
 {
 	int		z;
 	int		x;
 	int		y;
+	int	original_x;
+	int	original_y;
+	int	original_z;
 	int		color;
 }			t_point;
 
@@ -43,6 +49,7 @@ typedef struct s_mlx
 	int		color;
 	t_point	**map;
 	int		rows;
+	int		cols;
 }			t_mlx;
 
 typedef struct s_draw
@@ -62,8 +69,9 @@ typedef struct s_var
 	double	scale_factor;
 }			t_var;
 
-void		test_lines(t_mlx *mlx_data, t_point **map, int rows, int cols);
-void		apply_isometric(t_point *point);
+void		print_lines(t_mlx *mlx_data, t_point **map, int rows, int cols);
+void		apply_isometric_to_map(t_point **map, int rows, int cols);
+void		disable_isometric_to_map(t_point **map, int rows, int cols);
 t_point		**get_map(char *file, int *argc, int *rows);
 
 #endif

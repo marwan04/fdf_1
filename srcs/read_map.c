@@ -6,7 +6,7 @@
 /*   By: malrifai <malrifai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 19:07:47 by malrifai          #+#    #+#             */
-/*   Updated: 2024/12/07 21:12:21 by malrifai         ###   ########.fr       */
+/*   Updated: 2024/12/08 20:44:23 by malrifai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	get_color(char *cell)
 
 	color = 0xFFFFFF;
 	splited_cell = ft_split(cell, ',');
+	if (!splited_cell)
+		return (0);
 	if (splited_cell[1] != NULL)
 	{
 		color = ft_atoi_base(splited_cell[1], 16);
@@ -37,9 +39,11 @@ t_point	*split_row(char *row, int y, int *argc, int cols)
 
 	x = 0;
 	splited_row = ft_split(row, ' ');
+	if (!splited_row)
+		return (NULL);
 	while (splited_row[*argc])
 		*argc = *argc + 1;
-	var.scale_factor = fmin(1920 / (*argc), 1080 / cols) * 0.53;
+	var.scale_factor = fmin(1920 / (*argc), 1080 / cols) * 0.7;
 	var.horizontal_offset = (1920 - (*argc - 1) * var.scale_factor) / 2;
 	var.vertical_offset = (1080 - (cols - 1) * var.scale_factor) / 2;
 	points = (t_point *)malloc(*argc * sizeof(t_point));
@@ -47,7 +51,10 @@ t_point	*split_row(char *row, int y, int *argc, int cols)
 	{
 		points[x].x = x * var.scale_factor + var.horizontal_offset;
 		points[x].y = y * var.scale_factor + var.vertical_offset;
-		points[x].z = ft_atoi(splited_row[x]) * var.scale_factor;
+		points[x].z = ft_atoi(splited_row[x]);//* var.scale_factor;
+		points[x].original_x = points[x].x;
+		points[x].original_y = points[x].y;
+		points[x].original_z = points[x].z;
 		points[x].color = get_color(splited_row[x]);
 		free(splited_row[x]);
 		x++;
@@ -87,7 +94,7 @@ t_point	**get_map(char *file, int *argc, int *rows)
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
-		line = ft_strtrim(line, " ");
+		line = ft_strtrim(line, "\n");
 		map[y] = split_row(line, y, argc, *rows);
 		y++;
 		free(line);
@@ -97,21 +104,4 @@ t_point	**get_map(char *file, int *argc, int *rows)
 	return (map);
 }
 
-void	apply_isometric(t_point *point)
-{
-	int		previous_x;
-	int		previous_y;
-	double	angle;
-	double	cos_angle;
-	double	sin_angle;
 
-	previous_x = point->x;
-	previous_y = point->y;
-	angle = 30.0;
-	cos_angle = cos(angle * M_PI / 180.0);
-	sin_angle = sin(angle * M_PI / 180.0);
-	point->x = (previous_x - previous_y) * cos_angle;
-	point->y = (previous_x + previous_y) * sin_angle - point->z;
-	point->x += 600;
-	point->y -= 240;
-}

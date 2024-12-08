@@ -11,7 +11,7 @@ LIB = -L./libft -lft -lmlx -lX11 -lm -lXext
 
 RM = rm -rf
 
-SRC_FILES = fdf.c draw.c read_map.c
+SRC_FILES = fdf.c draw.c read_map.c projections.c
 
 SRC = $(addprefix $(SRCDIR)/, $(SRC_FILES))
 OBJ = $(addprefix $(OBJDIR)/, $(SRC_FILES:.c=.o))

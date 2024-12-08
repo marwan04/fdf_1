@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malrifai <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: malrifai <malrifai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:38:27 by malrifai          #+#    #+#             */
-/*   Updated: 2024/11/09 23:58:57 by malrifai         ###   ########.fr       */
+/*   Updated: 2024/12/08 14:23:06 by malrifai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,5 @@ char	*ft_strtrim(char const *s1, char const *set)
 		if (str)
 			ft_strlcpy(str, &s1[i], j - i + 1);
 	}
-	return (str);
+	return (free((char *)s1), str);
 }

@@ -6,7 +6,7 @@
 /*   By: malrifai <malrifai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 20:15:21 by malrifai          #+#    #+#             */
-/*   Updated: 2024/12/05 22:02:16 by malrifai         ###   ########.fr       */
+/*   Updated: 2024/12/08 20:53:41 by malrifai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,29 +63,38 @@ void	draw_line(int *start, int *end, t_mlx *mlx)
 	draw_line_loop(start, end, mlx, draw_data);
 }
 
-void	test_lines(t_mlx *mlx_data, t_point **map, int rows, int cols)
+void print_lines(t_mlx *mlx_data, t_point **map, int rows, int cols)
 {
-	int	i;
-	int	j;
+    int i;
+    int j;
 
-	i = 0;
-	j = 0;
-	while (i < rows)
-	{
-		j = 0;
-		while (j < cols )
-		{
-			mlx_data->color = map[i][j].color;
-			if (j + 1 < cols)
-				draw_line((int []){map[i][j].x, map[i][j].y},
-					(int []){map[i][j + 1].x, map[i][j + 1].y}, mlx_data);
-			if (i + 1 < rows)
-				draw_line((int []){map[i][j].x, map[i][j].y},
-					(int []){map[i + 1][j].x, map[i + 1][j].y}, mlx_data);
-			j++;
-		}
-		i++;
-	}
-	mlx_put_image_to_window((*mlx_data).mlx_ptr, (*mlx_data).win_ptr,
-		(*mlx_data).img_ptr, 0, 0);
+    // Recreate the image to clear the buffer
+    mlx_destroy_image(mlx_data->mlx_ptr, mlx_data->img_ptr);
+    mlx_data->img_ptr = mlx_new_image(mlx_data->mlx_ptr, 1920, 1080);
+    mlx_data->img_data = mlx_get_data_addr(mlx_data->img_ptr,
+                                           &mlx_data->bpp, &mlx_data->line_length, &mlx_data->endian);
+
+    // Draw the map
+    i = 0;
+    while (i < rows)
+    {
+        j = 0;
+        while (j < cols)
+        {
+            mlx_data->color = map[i][j].color;
+            if (j + 1 < cols)
+                draw_line((int[]){map[i][j].x, map[i][j].y},
+                          (int[]){map[i][j + 1].x, map[i][j + 1].y}, mlx_data);
+            if (i + 1 < rows)
+                draw_line((int[]){map[i][j].x, map[i][j].y},
+                          (int[]){map[i + 1][j].x, map[i + 1][j].y}, mlx_data);
+            j++;
+        }
+        i++;
+    }
+
+    // Display the image
+    mlx_put_image_to_window(mlx_data->mlx_ptr, mlx_data->win_ptr,
+                            mlx_data->img_ptr, 0, 0);
 }
+
